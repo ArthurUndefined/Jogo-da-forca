@@ -1,32 +1,47 @@
 import random
 
-games = ["roblox","valorant","League of Legends","minecraft","brawlhalla","counter strike","smite","paladins","overwatch","terraria"]
-gameEscolhido = games[random.randint(0,9)]
-palavra = "_" * len(gameEscolhido)
+def initGame():
+    games = ["roblox","valorant","League of Legends","minecraft","brawlhalla","counter strike","smite","paladins","overwatch","terraria"]
+    gameEscolhido = games[random.randint(0,9)]
+    palavra = "_" * len(gameEscolhido)
+    vidas = 5
+
+    game()
 
 def game():
     global palavra
+    global vidas
 
     print("Jogo da forca \n")
 
     print(palavra)
 
-    letraEscolhida = input("tente uma letra:")
+    
+    letraEscolhida = input("Você tem " + str(vidas) + " vidas, tente uma letra:")
 
-    if letraEscolhida not in gameEscolhido:
-        print("perdeu uma vida")
+    if(vidas > 1):
 
-    contador = 0
+        if letraEscolhida not in gameEscolhido:
+            vidas -= 1
+            print ("\n" * 130) 
+            print("perdeu uma vida")
 
-    for caractere in gameEscolhido: 
-        if caractere == letraEscolhida:
-            index = int(gameEscolhido.find(caractere, contador))
+        contador = 0
 
-            palavra = palavra[:index] + palavra[index+1:]
-            palavra = palavra[:index] + letraEscolhida + palavra[index:]
+        for caractere in gameEscolhido: 
+            if caractere == letraEscolhida:
+                index = int(gameEscolhido.find(caractere, contador))
 
-        contador += 1   
+                palavra = palavra[:index] + palavra[index+1:]
+                palavra = palavra[:index] + letraEscolhida + palavra[index:]
 
-    game()
+            contador += 1   
 
-game()
+        game()
+    
+    else:
+        print ("\n" * 130) 
+        input("Você perdeu o jogo, pressione enter para reiniciar")
+        initGame()
+
+initGame()
